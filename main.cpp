@@ -1,60 +1,77 @@
-#include <iostream>
 #include "vector"
 #include "seg_tree.h"
 #include "fstream"
 #include "sstream"
+#include <cmath>
 
-int getSum(int low, int high, std::vector<int> test){
-    int count = 0;
-    for ( int i = low; i < high+1; i ++){
-        count += test[i];
+//TODO
+//THIS IS JUST TEMPORARY
+//WILL UPDATE WITH A BETTER SORTING ALGORITHM
+std::vector<std::vector<double>> insertionSort(std::vector<std::vector<double>> vec, int n) {
+    int i, j;
+    std::vector<double> key;
+    for (i = 1; i < n; i++) {
+        key = vec[i];
+        j = i - 1;
+        while (j >= 0 && vec[j][1] > key[1]) {
+            vec[j + 1] = vec[j];
+            j = j - 1;
+        }
+        vec[j + 1] = key;
     }
-    return count;
+    return vec;
 }
 
-std::vector <int> readVector(std::string fname) {
-    std::vector <int> inputVec;
+std::vector <std::vector<double>> readVector(std::string fname) {
+    std::vector <std::vector<double>> inputVec;
+
     std::ifstream infile{fname};
 
     std::string inputString;
 
     std::string element;
 
+    int depth = 0;
+
     std::getline(infile, inputString);
+
     std::stringstream stream(inputString);
-    while (stream >> element){
-        inputVec.push_back(std::stoi(element));
+    stream >> element;
+    double longitude = std::stod(element);
+    stream >> element;
+    double latitude = std::stod(element);
+
+    double stationLong;
+    double stationLat;
+
+    std::vector<double> lineVector;
+    while (std::getline(infile, inputString)){
+        std::stringstream stream(inputString);
+
+        stream >> element;
+        lineVector.push_back(std::stod(element));
+
+        stream >> element;
+        stationLong = std::stod(element);
+        stream >> element;
+        stationLat = std::stod(element);
+
+        lineVector.push_back(std::sqrt(std::pow(stationLong - longitude, 2) + std::pow(stationLat - latitude, 2)));
+
+        depth++;
+        inputVec.push_back(lineVector);
+        lineVector = {};
     }
+
+    inputVec = insertionSort(inputVec, inputVec.size());
 
     return inputVec;
 }
 
 int main(int argc, char*argv[]) {
-    std::vector<int> test = readVector(argv[1]);
-    seg_tree* ss = new seg_tree(test);
-    ss->root = new Node();
-    ss->root = ss->genTree(0, test.size()-1);
+    std::vector<std::vector<double>> intervalVec = readVector(argv[1]);
+    seg_tree* ss = new seg_tree(intervalVec);
 
-    //SUMMATION TEST
-    for (int i = 0; i < test.size(); i++){
-        for (int j = 0; j < test.size(); j++){
-            if (i <= j){
-                std::cout <<getSum(i, j, test)<< " " << ss->getValue(i,j) << "\n";
-                if(getSum(i, j, test) != ss->getValue(i,j)){
-
-                }
-            }
-        }
-    }
-    //SUMMATION TEST
-
-    //random insertions
-    ss->insert(6, 999999);
-    ss->insert(2, 99999);
-    ss->insert(3, 10);
-    ss->insert(4, 1);
-    ss->insert(5, 1);
-    ss->insert(6, 1);
-    ss->writeFile("test.dot", ss->root);
+    ss->writeFile(argv[1]);
     return 0;
 }
