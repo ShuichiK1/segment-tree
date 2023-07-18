@@ -1,21 +1,26 @@
 #include "node.h"
 
-
 // Default constructor
 Node::Node(){
-    this->data = 0;
+    this->gasPrice = 0.0;
+    this->lowPrice = 0.0;
+    this->highPrice = 0.0;
     this->left = nullptr;
     this->right = nullptr;
 }
 
-Node::Node(int data){
-    this->data = data;
+Node::Node(double allPrice){
+    this->gasPrice = allPrice;
+    this->lowPrice = allPrice;
+    this->highPrice = allPrice;
     this->left = nullptr;
     this->right = nullptr;
 }
 
-Node::Node(Node* left, Node* right){
-    this->data = 0;
+Node::Node(double lowPrice, double highPrice, Node* left, Node* right){
+    this->gasPrice = 0.00;
+    this->lowPrice = lowPrice;
+    this->highPrice = highPrice;
     this->left = left;
     this->right = right;
 }
@@ -24,6 +29,6 @@ Node::~Node(){
 
 }
 
-void Node::addData(int add){
-    this->data += add;
+void Node::addGasPrice(double add) {
+    this->gasPrice += add;
 }
