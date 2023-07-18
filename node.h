@@ -1,25 +1,24 @@
 #ifndef SEGTREE_NODE_H
 #define SEGTREE_NODE_H
 
-
 class Node {
 private:
-
-
     friend class seg_tree;
-public:
-    int data;
+    double gasPrice;
+    double lowPrice;
+    double highPrice;
 
     Node* left;
     Node* right;
-
+public:
     Node();
     // Overloading
-    Node(int data);
+    Node(double allPrice);
+    Node(double lowPrice, double highPrice, Node* left, Node* right);
     Node(Node* left, Node* right);
     ~Node();
 
-    void addData(int add);
+    void addGasPrice(double add);
 };
 
 
