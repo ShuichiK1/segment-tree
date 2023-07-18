@@ -47,36 +47,26 @@ Node* seg_tree::genTree(int low, int high){
         return returnNode;
     }
 
-    //TODO OPTIMIZE
-    double lowPrice = inputVec[low][0];
-    double highPrice = inputVec[low][0];
-    for (int i = low; i < high+1; i++){
-        if (inputVec[i][0] > highPrice){
-            highPrice = inputVec[i][0];
-        }
-        if (inputVec[i][0] < lowPrice){
-            lowPrice = inputVec[i][0];
-        }
-    }
-    //TODO OPTIMIZE
-
     int mid = std::ceil((high + low) / 2.0);
 
-    Node* returnNode = new Node( lowPrice, highPrice, genTree(low, mid-1), genTree(mid, high));
+    Node* returnNode = new Node(genTree(low, mid-1), genTree(mid, high));
     returnNode->addGasPrice(returnNode->left->gasPrice + returnNode->right->gasPrice);
+
+    returnNode->lowPrice +=
+            returnNode->left->lowPrice *
+            (returnNode->left->lowPrice < returnNode->right->lowPrice);
+    returnNode->lowPrice +=
+            returnNode->right->lowPrice *
+            (returnNode->left->lowPrice >= returnNode->right->lowPrice);
+
+    returnNode->highPrice +=
+            returnNode->left->highPrice *
+            (returnNode->left->highPrice > returnNode->right->highPrice);
+    returnNode->highPrice +=
+            returnNode->right->highPrice *
+            (returnNode->left->highPrice <= returnNode->right->highPrice);
+
     return returnNode;
-}
-
-//TODO probably going to get rid of this
-//since the getAvg function is like our search
-bool seg_tree::search(int target, Node* tempNode){
-    if (target == tempNode->gasPrice){return true;}
-
-    if (tempNode->left != nullptr){return search(target, tempNode->left);}
-
-    if (tempNode->right != nullptr){return search(target, tempNode->right);}
-
-    return false;
 }
 
 void seg_tree::insert(int pos, int low, int high, double add, Node* currentNode){
@@ -98,8 +88,8 @@ void seg_tree::insert(int pos, double value){
 }
 
 double seg_tree::getAvg(double low, double high){
-    int lowIndex = binarySearch(1, 0, inputVec.size()-1, low);
-    int highIndex = binarySearch(0, 0, inputVec.size()-1, high);
+    int lowIndex = binarySearch(true, 0, inputVec.size()-1, low);
+    int highIndex = binarySearch(false, 0, inputVec.size()-1, high);
     if (highIndex == -1){return -999;}
     return getAvg(0,inputVec.size()-1 ,lowIndex, highIndex, root) / (highIndex - lowIndex + 1);
 }
@@ -131,7 +121,6 @@ double seg_tree::getAvg(int currentNodeLow, int currentNodeHigh, int searchLow, 
 
 void seg_tree::writeNode(int low, int high, Node* node, std::ofstream& outfile)
 {
-    std::setprecision(2);
     int mid = std::ceil((low + high) / 2.0);
     std::string nodeString = getNodeString(node, low, high);
     if (node->left != nullptr)
@@ -157,7 +146,6 @@ void seg_tree::writeFile(std::string ifname){
     outfile <<"digraph BST {\n";
 
     std::string rootString = getNodeString(root, 0, inputVec.size()-1);
-    //std::string rootString = ("\"" + std::to_string(0) + "to" + std::to_string(inputVec.size()-1) + "\\n" + std::to_string(root->gasPrice) + "\\n " + std::to_string(root->lowPrice) + "\\n"+ std::to_string(root->highPrice) + "\"");
     if (root == nullptr){
         outfile<< "\n";
     }
@@ -178,7 +166,10 @@ std::string seg_tree::getNodeString(Node* node, int low, int high){
     std::ostringstream highPrice;
     highPrice << std::fixed << std::setprecision(2) << node->highPrice;
 
-    std::string nodeString = "\"" + std::to_string(low) + "to" + std::to_string(high) + "\\nSum Price:" + sumPrice.str() + "\\nLow Price:" + lowPrice.str() + "\\nHigh Price:"+ highPrice.str() + "\"";
+    std::string nodeString =
+            "\"" + std::to_string(low) + "to" + std::to_string(high) +
+            "\\nSum Price:" + sumPrice.str() + "\\nLow Price:" + lowPrice.str() +
+            "\\nHigh Price:"+ highPrice.str() + "\"";
 
     return nodeString;
 }
