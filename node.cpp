@@ -17,10 +17,10 @@ Node::Node(double allPrice){
     this->right = nullptr;
 }
 
-Node::Node(double lowPrice, double highPrice, Node* left, Node* right){
+Node::Node( Node* left, Node* right){
     this->gasPrice = 0.00;
-    this->lowPrice = lowPrice;
-    this->highPrice = highPrice;
+    this->lowPrice = 0.0;
+    this->highPrice = 0.0;
     this->left = left;
     this->right = right;
 }
