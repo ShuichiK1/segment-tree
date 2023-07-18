@@ -25,8 +25,6 @@ public:
 
     Node* genTree(int low, int high);
 
-    bool search(int target, Node* tempNode);
-
     void insert(int pos, double value);
 
     void writeFile(std::string fname);
