@@ -3,23 +3,35 @@
 #include "fstream"
 #include "sstream"
 #include <cmath>
+int partition(std::vector<std::vector<double>> * sortVector, int low, int high){
+    double pivot = (*sortVector)[high][1];
 
-//TODO
-//THIS IS JUST TEMPORARY
-//WILL UPDATE WITH A BETTER SORTING ALGORITHM
-std::vector<std::vector<double>> insertionSort(std::vector<std::vector<double>> vec, int n) {
-    int i, j;
-    std::vector<double> key;
-    for (i = 1; i < n; i++) {
-        key = vec[i];
-        j = i - 1;
-        while (j >= 0 && vec[j][1] > key[1]) {
-            vec[j + 1] = vec[j];
-            j = j - 1;
+    int i = (low - 1);
+
+    for (int j = low; j <= high - 1; j++) {
+        if ((*sortVector)[j][1] < pivot) {
+            i++;
+            std::vector<double> temp;
+
+            temp = (*sortVector)[i];
+            (*sortVector)[i] = (*sortVector)[j];
+            (*sortVector)[j] = temp;
         }
-        vec[j + 1] = key;
     }
-    return vec;
+    std::vector<double> temp;
+    temp = (*sortVector)[i+1];
+    (*sortVector)[i+1] = (*sortVector)[high];
+    (*sortVector)[high] = temp;
+    return (i + 1);
+}
+
+void quickSort(std::vector<std::vector<double>> * sortVector, int low, int high){
+    if (low < high) {
+        int pi = partition(sortVector, low, high);
+
+        quickSort(sortVector, low, pi - 1);
+        quickSort(sortVector, pi + 1, high);
+    }
 }
 
 std::vector <std::vector<double>> readVector(std::string fname) {
@@ -63,7 +75,7 @@ std::vector <std::vector<double>> readVector(std::string fname) {
         lineVector = {};
     }
 
-    inputVec = insertionSort(inputVec, inputVec.size());
+    quickSort(&inputVec, 0, inputVec.size()-1);
 
     return inputVec;
 }
