@@ -8,26 +8,31 @@
 
 class seg_tree {
 private:
-    std::vector<int> inputVec;
-
-    int getValue(int low, int high, int currentNodeLow, int currentNodeHigh, Node* currentNode);
-
-public:
     Node* root;
-    seg_tree(std::vector<int> inputVec);
+    std::vector <std::vector<double>> inputVec;
+
+    double getAvg(int low, int high, int currentNodeLow, int currentNodeHigh, Node* currentNode);
+
+    int binarySearch(bool mode, int low, int high, int target);
+
+    void writeNode(int low, int high, Node* node, std::ofstream& outfile);
+
+    void insert(int pos, int low, int high, double add, Node* currentNode);
+
+    std::string getNodeString(Node* node, int low, int high);
+public:
+    seg_tree(std::vector <std::vector<double>> inputVec);
 
     Node* genTree(int low, int high);
 
     bool search(int target, Node* tempNode);
 
-    void insert(int pos, int low, int high, int data, Node* currentNode);
-    void insert(int pos, int value);
+    void insert(int pos, double value);
 
-    void writeFile(std::string fname, Node* tree);
-    void writeNode(int low, int high, Node* node, std::ofstream& outfile);
+    void writeFile(std::string fname);
 
-    int getValue(int low, int high);
-
+    double getAvg(double low, double high);
+    double getAvg(double high);
 };
 
 
