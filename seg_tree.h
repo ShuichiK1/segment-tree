@@ -13,7 +13,7 @@ private:
 
     double getAvg(int low, int high, int currentNodeLow, int currentNodeHigh, Node* currentNode);
 
-    int binarySearch(bool mode, int low, int high, int target);
+    int binarySearch(bool mode, int low, int high, double target);
 
     void writeNode(int low, int high, Node* node, std::ofstream& outfile);
 
