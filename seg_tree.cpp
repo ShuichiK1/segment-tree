@@ -12,12 +12,12 @@ seg_tree::seg_tree(std::vector <std::vector<double>> inputVec) {
 }
 
 void seg_tree::printVector() {
-    for (int i = 0; i < inputVec.size()-1; i++){
+    for (int i = 0; i < inputVec.size(); i++){
         std::cout<< i << " - $" << inputVec[i][0] << " " << inputVec[i][1] << "mi.\n";
     }
 }
 
-int seg_tree::binarySearch(bool mode, int low, int high, int target)
+int seg_tree::binarySearch(bool mode, int low, int high, double target)
 {
     int m;
     while (low <= high) {
@@ -77,8 +77,14 @@ Node* seg_tree::genTree(int low, int high){
 
 void seg_tree::insert(int pos, int low, int high, double add, Node* currentNode){
     if (!currentNode){return;}
-    currentNode->addGasPrice(add);
+    currentNode->addGasPrice(add - inputVec[pos][0]);
 
+    if (currentNode->highPrice < add){
+        currentNode->highPrice = add;
+    }
+    if (currentNode->lowPrice > add){
+        currentNode->lowPrice = add;
+    }
     int mid = std::ceil((low + high) / 2.0);
 
     if (low >= pos && mid-1 >= pos){
@@ -94,7 +100,8 @@ void seg_tree::insert(int pos, double value){
         std::cout << "invalid input\n";
         return;
     }
-    insert(pos, 0, inputVec.size()-1, value - inputVec[pos][0], root);
+    insert(pos, 0, inputVec.size()-1, value, root);
+    inputVec[pos][0] = value;
 }
 
 double seg_tree::getAvg(double low, double high){
