@@ -11,6 +11,12 @@ seg_tree::seg_tree(std::vector <std::vector<double>> inputVec) {
     this->root = genTree(0, inputVec.size()-1);
 }
 
+void seg_tree::printVector() {
+    for (int i = 0; i < inputVec.size()-1; i++){
+        std::cout<< i << " - $" << inputVec[i][0] << " " << inputVec[i][1] << "mi.\n";
+    }
+}
+
 int seg_tree::binarySearch(bool mode, int low, int high, int target)
 {
     int m;
@@ -84,6 +90,10 @@ void seg_tree::insert(int pos, int low, int high, double add, Node* currentNode)
 }
 
 void seg_tree::insert(int pos, double value){
+    if (pos < 0 || pos > inputVec.size()-1){
+        std::cout << "invalid input\n";
+        return;
+    }
     insert(pos, 0, inputVec.size()-1, value - inputVec[pos][0], root);
 }
 
