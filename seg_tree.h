@@ -31,6 +31,8 @@ public:
 
     double getAvg(double low, double high);
     double getAvg(double high);
+
+    void printVector();
 };
 
 
