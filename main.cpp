@@ -130,23 +130,44 @@ void options(seg_tree ss){
                 ss.insert(std::stoi(stationChoice), std::stod(newPrice));
             }
             catch(std::exception &err) {
-                std::cout << "invalid input";
+                std::cout << "invalid input\n";
             }
         }
         else if (choice == "2"){
             std::string high;
             std::cout << "input the maximum distance: ";
             std::cin >> high;
-            std::cout << "\nthe average gas price in this area is: $" << ss.getAvg(std::stod(high)) << "\n";
+            try{
+                if (std::stod(high) < 0.0){
+                    std::cout << "invalid input\n";
+                }
+                else {
+                    std::cout << "\nthe average gas price in this area is: $" << ss.getAvg(std::stod(high)) << "\n";
+                }
+            }
+            catch(std::exception &err){
+                std::cout << "invalid input\n";
+            }
+
         }
         else if (choice == "3"){
             std::string low;
             std::string high;
-            std::cout << "input the minumum distance: ";
+            std::cout << "input the minimum distance: ";
             std::cin >> low;
             std::cout << "\ninput the maximum distance: ";
             std::cin >> high;
-            std::cout << "\nthe average gas price in this area is: $" << ss.getAvg(std::stod(low),std::stod(high)) << "\n";
+            try {
+                if (std::stod(high) < 0.0 || std::stod(low)) {
+                    std::cout << "invalid input\n";
+                } else {
+                    std::cout << "\nthe average gas price in this area is: $"
+                              << ss.getAvg(std::stod(low), std::stod(high)) << "\n";
+                }
+            }
+            catch (std::exception &err){
+                std::cout << "invalid input\n";
+            }
         }
         else {
             std::cout << "invalid input\n";
