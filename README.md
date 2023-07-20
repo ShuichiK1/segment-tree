@@ -3,13 +3,13 @@ Before compiling the program, please make sure to either create a valid input tx
 
 To create a valid input file, you must format the input txt file as following:
 
-![image](https://github.com/ShuichiK1/segment-tree/assets/136614316/e2bce3cb-b89c-44fe-90a8-cbcb46c533b3)
+![image](https://github.com/ShuichiK1/segment-tree/assets/136614316/06d7d50f-64de-42c0-a8fa-74be2421f4aa)
 
 
 
 Here is an example valid file input:
 
-![image](https://github.com/ShuichiK1/segment-tree/assets/136614316/90edd525-c013-4130-acdd-d5e840958f36)
+![image](https://github.com/ShuichiK1/segment-tree/assets/136614316/d25bad01-22fd-4bef-aa91-2011b28ee9bf)
 
 
 
