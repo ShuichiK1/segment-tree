@@ -251,26 +251,53 @@ void seg_tree::insert(int pos, int low, int high, double add, Node* currentNode)
     //change the current nodes gas price to updated price
     currentNode->addGasPrice(add - inputVec[pos][0]);
 
-    //updates current nodes high/low price
-    //if they are no longer the highest/lowest
-    if (currentNode->highPrice < add){
-        currentNode->highPrice = add;
-    }
-    if (currentNode->lowPrice > add){
-        currentNode->lowPrice = add;
-    }
-
     //calculates mid point
     int mid = std::ceil((low + high) / 2.0);
 
     //goes to the next node that contains
     //the position that is being updated
-    if (low >= pos && mid-1 >= pos){
-        return insert(pos, low, mid-1, add, currentNode->left);
+    if (low <= pos && mid-1 >= pos){
+        insert(pos, low, mid-1, add, currentNode->left);
+
     }
     else{
-        return insert(pos, mid, high, add, currentNode->right);
+        insert(pos, mid, high, add, currentNode->right);
     }
+
+    //if current node is a leaf node
+    //set low and high price to the only
+    //possible value
+    if (low == high){
+        currentNode->lowPrice = add;
+        currentNode->highPrice = add;
+    }
+    else {
+        //variables to hold left/right children's
+        //low/high prices to update current node's
+        //low/high later
+        double tempLeftLow = currentNode->left->lowPrice;
+        double tempLeftHigh = currentNode->left->highPrice;
+
+        double tempRightLow = currentNode->right->lowPrice;
+        double tempRightHigh = currentNode->right->highPrice;
+
+        //updates current nodes high/low price
+        if (tempLeftLow < tempRightLow){
+            currentNode->lowPrice = tempLeftLow;
+        }
+        else{
+            currentNode->lowPrice = tempRightLow;
+        }
+
+        if (tempLeftHigh > tempRightHigh){
+            currentNode->highPrice = tempLeftHigh;
+        }
+        else{
+            currentNode->highPrice = tempRightHigh;
+        }
+
+    }
+    return;
 }
 
 //function for writing the dot file
@@ -284,7 +311,7 @@ void seg_tree::writeFile(std::string ifname){
     //start of the dot file
     outfile <<"digraph BST {\n";
 
-    //stringafies root node for dot file
+    //stringifies root node for dot file
     std::string rootString = getNodeString(root, 0, inputVec.size()-1);
     //if the tree is empty then write empty line
     if (root == nullptr){
@@ -308,7 +335,7 @@ void seg_tree::writeNode(int low, int high, Node* node, std::ofstream& outfile)
 {
     //calculates mid point
     int mid = std::ceil((low + high) / 2.0);
-    //stringafies current node
+    //stringifies current node
     std::string nodeString = getNodeString(node, low, high);
 
     //if current node has a left child then write that left child
@@ -328,7 +355,7 @@ void seg_tree::writeNode(int low, int high, Node* node, std::ofstream& outfile)
     }
 }
 
-//stringafies the data of a node
+//stringifies the data of a node
 //for the dot file
 std::string seg_tree::getNodeString(Node* node, int low, int high){
     std::ostringstream sumPrice;
