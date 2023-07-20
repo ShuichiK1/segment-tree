@@ -1,3 +1,10 @@
+//Group 3
+//James McCaffrey
+//Shuichi Kameda
+//Evan Ung
+//Michael Gilkeson
+//Segment Trees
+//7/24/23
 #include <string>
 #include "vector"
 #include "node.h"
@@ -11,28 +18,32 @@ private:
     Node* root;
     std::vector <std::vector<double>> inputVec;
 
-    double getAvg(int low, int high, int currentNodeLow, int currentNodeHigh, Node* currentNode);
-
     int binarySearch(bool mode, int low, int high, double target);
 
-    void writeNode(int low, int high, Node* node, std::ofstream& outfile);
+    double getAvg(int currentNodeLow, int currentNodeHigh, int searchLow, int searchHigh, Node* currentNode);
+    std::pair<double, double> getHighLow(int currentNodeLow, int currentNodeHigh, int searchLow, int searchHigh, Node* currentNode, std::pair<double, double> highLow);
 
     void insert(int pos, int low, int high, double add, Node* currentNode);
 
+    void writeNode(int low, int high, Node* node, std::ofstream& outfile);
     std::string getNodeString(Node* node, int low, int high);
+
 public:
     seg_tree(std::vector <std::vector<double>> inputVec);
 
     Node* genTree(int low, int high);
 
-    void insert(int pos, double value);
-
-    void writeFile(std::string fname);
+    void printVector();
 
     double getAvg(double low, double high);
     double getAvg(double high);
 
-    void printVector();
+    std::pair<double, double> getHighLow(double low, double high);
+    std::pair<double, double> getHighLow(double high);
+
+    void insert(int pos, double value);
+
+    void writeFile(std::string fname);
 };
 
 
