@@ -10,14 +10,22 @@ To create a valid input file, you must format the input txt file as following:
 
 Here is an example valid file input:
 
-10.0 10.0"\n"
-2.34 7 8"\n"
-1.89 5 5"\n"
-2.12 1 1"\n"
-3.45 9.2 2.8"\n"
-1.52 0 22"\n"
-5.67 3 0"\n"
-1.01 90 1"\n"
+10.0 10.0
+
+2.34 7 8
+
+1.89 5 5
+
+2.12 1 1"
+
+3.45 9.2 2.8
+
+1.52 0 22
+
+5.67 3 0
+
+1.01 90 1
+
 
 
 Once you have a valid input file, you can compile the program with g++ with this command:
