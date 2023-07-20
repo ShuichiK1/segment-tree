@@ -2,9 +2,9 @@
 Before compiling the program, please make sure to either create a valid input txt file, or have a valid input txt file.
 
 To create a valid input file, you must format the input txt file as following:
-<starting position longitude coordinate in degrees> <starting position latitude coordinate in degrees>
-<gas station 1 gas price> <gas station 1 longitude coordinate in degrees> <gas 1 station latitude coordinate in degrees>
-<gas station 2 gas price> <gas station 2 longitude coordinate in degrees> <gas 2 station latitude coordinate in degrees>
+[starting position longitude coordinate in degrees] [starting position latitude coordinate in degrees]
+[gas station 1 gas price] [gas station 1 longitude coordinate in degrees] [gas 1 station latitude coordinate in degrees]
+[gas station 2 gas price] [gas station 2 longitude coordinate in degrees] [gas 2 station latitude coordinate in degrees]
 (add more gas stations using the same format)
 
 
