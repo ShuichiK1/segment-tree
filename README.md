@@ -2,22 +2,22 @@
 Before compiling the program, please make sure to either create a valid input txt file, or have a valid input txt file.
 
 To create a valid input file, you must format the input txt file as following:
-[starting position longitude coordinate in degrees] [starting position latitude coordinate in degrees]
-[gas station 1 gas price] [gas station 1 longitude coordinate in degrees] [gas 1 station latitude coordinate in degrees]
-[gas station 2 gas price] [gas station 2 longitude coordinate in degrees] [gas 2 station latitude coordinate in degrees]
+[starting position longitude] [starting position latitude]
+[gas station 1 gas price] [gas station 1 longitude] [gas 1 station latitude]
+[gas station 2 gas price] [gas station 2 longitude] [gas 2 station latitude]
 (add more gas stations using the same format)
 
 
 Here is an example valid file input:
 
-10.0 10.0
-2.34 7 8.
-1.89 5 5
-2.12 1 1
-3.45 9.2 2.8
-1.52 0 22
-5.67 3 0
-1.01 90 1
+10.0 10.0"\n"
+2.34 7 8"\n"
+1.89 5 5"\n"
+2.12 1 1"\n"
+3.45 9.2 2.8"\n"
+1.52 0 22"\n"
+5.67 3 0"\n"
+1.01 90 1"\n"
 
 
 Once you have a valid input file, you can compile the program with g++ with this command:
