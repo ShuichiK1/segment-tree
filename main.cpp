@@ -21,15 +21,15 @@ double toRadians(double degrees) {
 //2 longitude latitude degree coordinates in miles
 double calcDistance(double lat1, double lon1, double lat2, double lon2) {
     //approximation of the radius of earth in miles
-    double earthRadius = 3960.0;
+    double earthRadius = 3958.8;
 
     //Haversine formula
     double dLat = toRadians(lat2 - lat1);
     double dLon = toRadians(lon2 - lon1);
-    double a = sin(dLat / 2) * sin(dLat / 2) +
+    double a = sin(dLat / 2.0) * sin(dLat / 2.0) +
                cos(toRadians(lat1)) * cos(toRadians(lat2)) *
-               sin(dLon / 2) * sin(dLon / 2);
-    double c = 2 * atan2(sqrt(a), sqrt(1 - a));
+               sin(dLon / 2.0) * sin(dLon / 2.0);
+    double c = 2.0 * atan2(sqrt(a), sqrt(1.0 - a));
     return earthRadius * c;
 }
 
@@ -87,9 +87,9 @@ std::vector <std::vector<double>> readVector(std::string fname) {
     //position longitude and latitude
     std::stringstream stream(inputString);
     stream >> element;
-    double longitude = std::stod(element);
-    stream >> element;
     double latitude = std::stod(element);
+    stream >> element;
+    double longitude = std::stod(element);
 
     //initializes variables that hold
     //a gas stations longitude/latitude coordinates
@@ -109,9 +109,10 @@ std::vector <std::vector<double>> readVector(std::string fname) {
         //this stores the gas station longitude/latitude
         //coordinates
         stream >> element;
-        stationLong = std::stod(element);
-        stream >> element;
         stationLat = std::stod(element);
+        stream >> element;
+        stationLong = std::stod(element);
+
 
         //this calculates the distance between the starting
         //position and the gas station position in miles
