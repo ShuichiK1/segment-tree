@@ -6,10 +6,10 @@
 //Segment Trees
 //7/24/23
 #include "seg_tree.h"
-#include "vector"
-#include "iostream"
-#include "fstream"
-#include "cmath"
+#include <vector>
+#include <iostream>
+#include <fstream
+#include <cmath>
 #include <iomanip>
 
 //constructor initializes data members
@@ -69,9 +69,48 @@ Node* seg_tree::genTree(int low, int high){
 //loops through the input vector and
 //prints out its contents
 void seg_tree::printVector() {
-    for (int i = 0; i < inputVec.size(); i++){
-        std::cout<< i << " - $" << inputVec[i][0] << " " << inputVec[i][1] << "mi.\n";
+    int pageNum = 1;
+    int pageStart = 0;
+    int pageEnd = 10;
+
+    std::cout << "Insert '>' to view next page, otherwise insert '.' to stop.\n\n";
+    std::cout << "----- [Page " << pageNum << "] -----\n";
+
+    for (pageStart; pageStart < pageEnd; pageStart++) {
+        std::cout
+                << "[" << pageStart << "] - $" << std::fixed << std::setprecision(2) <<inputVec[pageStart][0]
+                << "\t" << std::setprecision(4) << inputVec[pageStart][1] << " mi.\n";
+        if ((inputVec.size() > pageEnd) && (pageStart >= (pageEnd - 1))) {
+            bool loop = true;
+
+            while (loop) {
+                char input;
+                std::cin >> input;
+
+                switch (input) {
+                    case '>':
+                        pageNum += 1;
+                        pageStart = pageEnd - 1;
+                        pageEnd += 10;
+
+                        if (inputVec.size() <= pageEnd) {
+                            pageEnd = inputVec.size();
+                        }
+
+                        loop = false;
+                        std::cout << "----- [Page " << pageNum << "]-----\n";
+
+                    case '.':
+                        loop = false;
+                        break;
+
+                    default:
+                        loop = true;
+                }
+            }
+        }
     }
+    std::cout <<"\n";
 }
 
 //binary search for getting index number
