@@ -81,6 +81,11 @@ std::vector <std::vector<double>> readVector(std::string fname) {
 
     //starts file streaming
     std::ifstream infile{fname};
+    while (infile.fail()) {
+        std::cout << fname << " doesn't exist, input a valid file name: ";
+        std::cin >> fname;
+        infile.open(fname);
+    }
     std::getline(infile, inputString);
 
     //starts string streaming and gets starting
