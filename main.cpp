@@ -144,6 +144,14 @@ bool exit(){
     std::string input;
     std::cout << "\ninput 'yes' to exit: ";
     std::cin >> input;
+
+    //changes any uppercase characters to lowercase
+    if (int i = 0; i < input.length(); i++) {
+        if (isupper(input[i])) {
+                input[i] += 32;
+            }
+    }
+
     if (input == "yes") {return true;}
     else{return false;}
 }
