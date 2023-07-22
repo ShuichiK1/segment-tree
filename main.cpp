@@ -316,26 +316,35 @@ void options(seg_tree st){
         std::string choice;
         std::cin >> choice;
 
-        //calls function
-        //based on user's choice
-        if (choice == "1"){
-            choice1(&st);
+        if (choice.size() == 1) {
+            char cchoice = choice.at(0);
+
+            //calls function
+            //based on user's choice
+            switch(cchoice){
+                case '1':
+                    choice1(&st);
+                    break;
+                case '2':
+                    choice2(&st);
+                    break;
+                case '3':
+                    choice3(&st);
+                    break;
+                case '4':
+                    choice4(&st);
+                    break;
+                case '5':
+                    choice5(&st);
+                    break;
+                default:
+                    std::cout << "Invalid input\n";
+                    break;
+            }
+        } else {
+            std::cout << "Invalid input\n";
         }
-        else if (choice == "2"){
-            choice2(&st);
-        }
-        else if (choice == "3"){
-            choice3(&st);
-        }
-        else if(choice == "4"){
-            choice4(&st);
-        }
-        else if (choice == "5"){
-            choice5(&st);
-        }
-        else {
-            std::cout << "invalid input\n";
-        }
+
         //checks if the user wants to exit
         loop = !exit();
     }
