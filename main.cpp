@@ -5,12 +5,13 @@
 //Michael Gilkeson
 //Segment Trees
 //7/24/23
-#include "vector"
 #include "seg_tree.h"
-#include "fstream"
-#include "sstream"
+#include <vector>
+#include <fstream>
+#include <sstream>
 #include <cmath>
-#include "iostream"
+#include <iomanip>
+#include <iostream>
 
 //function that converts degrees to radians
 double toRadians(double degrees) {
@@ -82,7 +83,7 @@ std::vector <std::vector<double>> readVector(std::string fname) {
     //starts file streaming
     std::ifstream infile{fname};
     while (infile.fail()) {
-        std::cout << fname << " doesn't exist, input a valid file name: ";
+        std::cout << fname << "Doesn't exist, input a valid file name: ";
         std::cin >> fname;
         infile.open(fname);
     }
@@ -142,11 +143,11 @@ std::vector <std::vector<double>> readVector(std::string fname) {
 //if they want to exit
 bool exit(){
     std::string input;
-    std::cout << "\ninput 'yes' to exit: ";
+    std::cout << "\nInput 'yes' to exit, otherwise enter any key to return to menu: ";
     std::cin >> input;
 
     //changes any uppercase characters to lowercase
-    if (int i = 0; i < input.length(); i++) {
+    for (int i = 0; i < input.length(); i++) {
         if (isupper(input[i])) {
                 input[i] += 32;
             }
@@ -160,12 +161,13 @@ bool exit(){
 //the options the program has
 void printOptions(){
     std::cout
-            << "please input your choice:\n"
-            << "1 - change a gas price\n"
-            << "2 - get average gas price from starting position\n"
-            << "3 - get average gas price from specified range\n"
-            << "4 - get lowest/highest gas price from a starting position\n"
-            << "5 - get lowest/highest gas price from specified range\n";
+            << "\n====================================================================\n\n"
+            << "[1] - Change a gas price\n"
+            << "[2] - Get average gas price from starting position\n"
+            << "[3] - Get average gas price from specified range\n"
+            << "[4] - Get lowest/highest gas price from a starting position\n"
+            << "[5] - Get lowest/highest gas price from specified range\n\n"
+            << "Please input your choice:";
 }
 
 //function for changing a gas price
@@ -174,6 +176,7 @@ void printOptions(){
 //in the object
 void choice1(seg_tree *st){
     //prints out the vector
+    std::cout << "\n";
     st->printVector();
 
     //initializes input variables
@@ -181,9 +184,9 @@ void choice1(seg_tree *st){
     std::string newPrice;
 
     //gets inputs
-    std::cout << "please input the index of which gas price you would like to update: ";
+    std::cout << "Please input the index of which gas price you would like to update: ";
     std::cin >> stationChoice;
-    std::cout << "please input the new gas price: ";
+    std::cout << "Please input the new gas price: ";
     std::cin >> newPrice;
 
     //tries to do the insert function with
@@ -193,7 +196,7 @@ void choice1(seg_tree *st){
         st->insert(std::stoi(stationChoice), std::stod(newPrice));
     }
     catch(std::exception &err) {
-        std::cout << "invalid input\n";
+        std::cout << "<nvalid input\n";
     }
 }
 
@@ -203,7 +206,7 @@ void choice1(seg_tree *st){
 void choice2(seg_tree *st){
     //gets input from user
     std::string high;
-    std::cout << "input the maximum distance: ";
+    std::cout << "\nInput the maximum distance: ";
     std::cin >> high;
 
     //tries to call average function
@@ -213,14 +216,16 @@ void choice2(seg_tree *st){
         //if the input is negative
         //then input is invalid
         if (std::stod(high) < 0.0){
-            std::cout << "invalid input\n";
+            std::cout << "Invalid input\n";
         }
         else {
-            std::cout << "\nthe average gas price in this area is: $" << st->getAvg(std::stod(high)) << "\n";
+            std::cout 
+                    << "\nThe average gas price in this area is: $" << std::fixed << std::setprecision(2)
+                    << st->getAvg(std::stod(high)) << "\n";
         }
     }
     catch(std::exception &err){
-        std::cout << "invalid input\n";
+        std::cout << "Invalid input\n";
     }
 }
 
@@ -232,9 +237,9 @@ void choice3(seg_tree *st){
     std::string low;
     std::string high;
 
-    std::cout << "input the minimum distance: ";
+    std::cout << "\nInput the minimum distance: ";
     std::cin >> low;
-    std::cout << "\ninput the maximum distance: ";
+    std::cout << "Input the maximum distance: ";
     std::cin >> high;
 
     //tries to call average function
@@ -244,15 +249,15 @@ void choice3(seg_tree *st){
         //if either input is negative
         //then input(s) is invalid
         if (std::stod(high) < 0.0 || std::stod(low) < 0.0) {
-            std::cout << "invalid input test\n";
+            std::cout << "Invalid input test\n";
         }
         else {
-            std::cout << "\nthe average gas price in this area is: $"
+            std::cout << "\nThe average gas price in this area is: $" << std::fixed << std::setprecision(2)
                       << st->getAvg(std::stod(low), std::stod(high)) << "\n";
         }
     }
     catch (std::exception &err){
-        std::cout << "invalid input\n";
+        std::cout << "Invalid input\n";
     }
 }
 
@@ -262,7 +267,7 @@ void choice4(seg_tree *st){
     //gets input
     std::string high;
 
-    std::cout << "input the maximum distance: ";
+    std::cout << "\nInput the maximum distance: ";
     std::cin >> high;
 
     //tries to do getHighLow function with
@@ -272,16 +277,20 @@ void choice4(seg_tree *st){
         //if input is negative
         //then input is invalid
         if (std::stod(high) < 0.0){
-            std::cout << "invalid input\n";
+            std::cout << "Invalid input\n";
         }
         else {
             std::pair<double,double> highLow = st->getHighLow(std::stod(high));
-            std::cout << "\nthe lowest gas price in this area is: $" << highLow.first << "\n";
-            std::cout << "\nthe highest gas price in this area is: $" << highLow.second << "\n";
+            std::cout 
+                    << "\nthe lowest gas price in this area is: $" << std::fixed << std::setprecision(2)
+                    << highLow.first << "\n";
+            std::cout 
+                    << "\nthe highest gas price in this area is: $" << std::fixed << std::setprecision(2)
+                    << highLow.second << "\n";
         }
     }
     catch(std::exception &err){
-        std::cout << "invalid input\n";
+        std::cout << "Invalid input\n";
     }
 }
 
@@ -290,9 +299,9 @@ void choice5(seg_tree *st){
     std::string low;
     std::string high;
 
-    std::cout << "input the minimum distance: ";
+    std::cout << "\nInput the minimum distance: ";
     std::cin >> low;
-    std::cout << "\ninput the maximum distance: ";
+    std::cout << "Input the maximum distance: ";
     std::cin >> high;
 
     //tries to call getHighLow function
@@ -302,16 +311,20 @@ void choice5(seg_tree *st){
         //if either input is negative
         //then input(s) is invalid
         if (std::stod(high) < 0.0 || std::stod(low) < 0.0) {
-            std::cout << "invalid input test\n";
+            std::cout << "Invalid input test\n";
         }
         else {
             std::pair<double,double> highLow = st->getHighLow(std::stod(low), std::stod(high));
-            std::cout << "\nthe lowest gas price in this area is: $" << highLow.first << "\n";
-            std::cout << "\nthe highest gas price in this area is: $" << highLow.second << "\n";
+            std::cout 
+                    << "\nThe lowest gas price in this area is: $" << std::fixed << std::setprecision(2)
+                    << highLow.first << "\n";
+            std::cout 
+                    << "\nThe highest gas price in this area is: $" << std::fixed << std::setprecision(2)
+                    << highLow.second << "\n";
         }
     }
     catch (std::exception &err){
-        std::cout << "invalid input\n";
+        std::cout << "Invalid input\n";
     }
 }
 
@@ -369,6 +382,6 @@ int main(int argc, char*argv[]) {
     seg_tree* st = new seg_tree(intervalVec);
     options(*st);
     st->writeFile(argv[1]);
-    std::cout << "dot file has been written\n";
+    std::cout << "\nDOT file has been written\n";
     return 0;
 }
