@@ -184,9 +184,9 @@ void choice1(seg_tree *st){
     std::string newPrice;
 
     //gets inputs
-    std::cout << "Please input the index of which gas price you would like to update: ";
+    std::cout << "Please input the index of which gas price you would like to update:";
     std::cin >> stationChoice;
-    std::cout << "Please input the new gas price: ";
+    std::cout << "Please input the new gas price:";
     std::cin >> newPrice;
 
     //tries to do the insert function with
@@ -196,7 +196,7 @@ void choice1(seg_tree *st){
         st->insert(std::stoi(stationChoice), std::stod(newPrice));
     }
     catch(std::exception &err) {
-        std::cout << "<nvalid input\n";
+        std::cout << "<nIvalid input\n";
     }
 }
 
@@ -206,7 +206,7 @@ void choice1(seg_tree *st){
 void choice2(seg_tree *st){
     //gets input from user
     std::string high;
-    std::cout << "\nInput the maximum distance: ";
+    std::cout << "\nInput the maximum distance:";
     std::cin >> high;
 
     //tries to call average function
@@ -237,9 +237,9 @@ void choice3(seg_tree *st){
     std::string low;
     std::string high;
 
-    std::cout << "\nInput the minimum distance: ";
+    std::cout << "\nInput the minimum distance:";
     std::cin >> low;
-    std::cout << "Input the maximum distance: ";
+    std::cout << "Input the maximum distance:";
     std::cin >> high;
 
     //tries to call average function
@@ -267,7 +267,7 @@ void choice4(seg_tree *st){
     //gets input
     std::string high;
 
-    std::cout << "\nInput the maximum distance: ";
+    std::cout << "\nInput the maximum distance:";
     std::cin >> high;
 
     //tries to do getHighLow function with
@@ -299,9 +299,9 @@ void choice5(seg_tree *st){
     std::string low;
     std::string high;
 
-    std::cout << "\nInput the minimum distance: ";
+    std::cout << "\nInput the minimum distance:";
     std::cin >> low;
-    std::cout << "Input the maximum distance: ";
+    std::cout << "Input the maximum distance:";
     std::cin >> high;
 
     //tries to call getHighLow function
