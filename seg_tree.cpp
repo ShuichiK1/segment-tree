@@ -10,6 +10,7 @@
 #include <iostream>
 #include <fstream>
 #include <cmath>
+#include <sstream>
 #include <iomanip>
 
 //constructor initializes data members
