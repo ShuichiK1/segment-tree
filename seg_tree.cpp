@@ -8,7 +8,7 @@
 #include "seg_tree.h"
 #include <vector>
 #include <iostream>
-#include <fstream
+#include <fstream>
 #include <cmath>
 #include <iomanip>
 
