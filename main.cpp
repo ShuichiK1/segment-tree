@@ -221,7 +221,7 @@ void choice2(seg_tree *st){
         else {
             std::cout 
                     << "\nThe average gas price in this area is: $" << std::fixed << std::setprecision(2)
-                    << st->getAvg(std::stod(high)) << "\n";
+                    << st->getAvg(0, std::stod(high)) << "\n";
         }
     }
     catch(std::exception &err){
