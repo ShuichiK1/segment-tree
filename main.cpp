@@ -83,8 +83,13 @@ std::vector <std::vector<double>> readVector(std::string fname) {
     //starts file streaming
     std::ifstream infile{fname};
     while (infile.fail()) {
-        std::cout << fname << "Doesn't exist, input a valid file name: ";
+        std::cout << fname << " doesn't exist, input a valid file name (Enter 'Q' to exit program): ";
         std::cin >> fname;
+        if (fname.length() == 1) {
+            if (fname[0] == 'Q') {
+                exit(0);
+            }
+        }
         infile.open(fname);
     }
     std::getline(infile, inputString);
@@ -166,7 +171,8 @@ void printOptions(){
             << "[2] - Get average gas price from starting position\n"
             << "[3] - Get average gas price from specified range\n"
             << "[4] - Get lowest/highest gas price from a starting position\n"
-            << "[5] - Get lowest/highest gas price from specified range\n\n"
+            << "[5] - Get lowest/highest gas price from specified range\n"
+            << "[6] - Exit the program write the DOT file\n\n"
             << "Please input your choice:";
 }
 
@@ -334,7 +340,7 @@ void options(seg_tree st){
     //loops getting the choice
     //until user exits
     bool loop = true;
-    while (loop){
+    while (loop) {
         //prints out options
         printOptions();
 
@@ -347,7 +353,7 @@ void options(seg_tree st){
 
             //calls function
             //based on user's choice
-            switch(cchoice){
+            switch (cchoice) {
                 case '1':
                     choice1(&st);
                     break;
@@ -363,6 +369,9 @@ void options(seg_tree st){
                 case '5':
                     choice5(&st);
                     break;
+                case '6':
+                    loop = false;
+                    break;
                 default:
                     std::cout << "Invalid input\n";
                     break;
@@ -372,7 +381,9 @@ void options(seg_tree st){
         }
 
         //checks if the user wants to exit
-        loop = !exit();
+        if (loop) {
+            loop = !exit();
+        }
     }
 }
 
