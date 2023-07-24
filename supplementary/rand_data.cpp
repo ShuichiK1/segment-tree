@@ -3,6 +3,7 @@
 #include <cstdlib>
 #include <iomanip>
 
+// supplementary file for generating datasets with valid random values
 // referenced from https://www.geeksforgeeks.org/generate-a-random-float-number-in-cpp/
 double random_double(double min, double max) {
     double random = ((double) rand()) / (double) RAND_MAX;
