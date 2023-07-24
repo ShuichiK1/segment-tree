@@ -20,6 +20,7 @@ double toRadians(double degrees) {
 
 //function that approximates the distance between
 //2 longitude latitude degree coordinates in miles
+//reference https://stackoverflow.com/questions/27126714/c-latitude-and-longitude-distance-calculator
 double calcDistance(double lat1, double lon1, double lat2, double lon2) {
     //approximation of the radius of earth in miles
     double earthRadius = 3958.8;
@@ -62,6 +63,7 @@ int partition(std::vector<std::vector<double>> * sortVector, int low, int high){
 //this is a quickSort function
 //it sorts the vector by its distance from
 //the starting position
+//reference https://www.geeksforgeeks.org/cpp-program-for-quicksort/
 void quickSort(std::vector<std::vector<double>> * sortVector, int low, int high){
     if (low < high) {
         int pi = partition(sortVector, low, high);
@@ -154,8 +156,8 @@ bool exit(){
     //changes any uppercase characters to lowercase
     for (int i = 0; i < input.length(); i++) {
         if (isupper(input[i])) {
-                input[i] += 32;
-            }
+            input[i] += 32;
+        }
     }
 
     if (input == "yes") {return true;}
@@ -224,13 +226,16 @@ void choice2(seg_tree *st){
         if (std::stod(high) < 0.0){
             std::cout << "\nInvalid input\n";
         }
-        else if (st->getAvg(0, std::stod(high)) != -999) {
-            std::cout 
-                    << "\nThe average gas price in this area is: $" << std::fixed << std::setprecision(2)
-                    << st->getAvg(0, std::stod(high)) << "\n";
-        } else {
-            std::cout 
-                    << "\nMaximum distance too small\n";
+        else {
+            double average = st->getAvg(std::stod(high));
+            if (average == -999){
+                std::cout << "\nMaximum distance too small\n";
+            }
+            else{
+                std::cout
+                        << "\nThe average gas price in this area is: $" << std::fixed << std::setprecision(2)
+                        << average << "\n";
+            }
         }
     }
     catch(std::exception &err){
@@ -260,11 +265,15 @@ void choice3(seg_tree *st){
         if (std::stod(high) < 0.0 || std::stod(low) < 0.0) {
             std::cout << "\nInvalid input\n";
         }
-        else if (st->getAvg(std::stod(low), std::stod(high)) != -999) {
-            std::cout << "\nThe average gas price in this area is: $" << std::fixed << std::setprecision(2)
-                      << st->getAvg(std::stod(low), std::stod(high)) << "\n";
-        } else {
-            std::cout << "\nNo stations found between distances\n";
+        else {
+            double average = st->getAvg(std::stod(low), std::stod(high));
+            if (average != -999){
+                std::cout << "\nThe average gas price in this area is: $" << std::fixed << std::setprecision(2)
+                          << average << "\n";
+            }
+            else {
+                std::cout << "\nNo stations found between distances\n";
+            }
         }
     }
     catch (std::exception &err){
@@ -291,17 +300,17 @@ void choice4(seg_tree *st){
             std::cout << "\nInvalid input\n";
         }
         else {
-            std::pair<double,double> highLow = st->getHighLow(std::stod(high));
-            if (highLow.first == -999 && highLow.second == -999) {
+            std::pair<double,double> lowHigh = st->getLowHigh(std::stod(high));
+            if (lowHigh.first == -999 && lowHigh.second == -999) {
                 std::cout << "\nNo stations found within that distance\n";
                 return;
             }
-            std::cout 
+            std::cout
                     << "\nThe lowest gas price in this area is: $" << std::fixed << std::setprecision(2)
-                    << highLow.first << "\n";
-            std::cout 
+                    << lowHigh.first << "\n";
+            std::cout
                     << "\nThe highest gas price in this area is: $" << std::fixed << std::setprecision(2)
-                    << highLow.second << "\n";
+                    << lowHigh.second << "\n";
         }
     }
     catch(std::exception &err){
@@ -329,17 +338,17 @@ void choice5(seg_tree *st){
             std::cout << "\nInvalid input\n";
         }
         else {
-            std::pair<double,double> highLow = st->getHighLow(std::stod(low), std::stod(high));
-            if (highLow.first == -999 && highLow.second == -999) {
+            std::pair<double,double> lowHigh = st->getLowHigh(std::stod(low), std::stod(high));
+            if (lowHigh.first == -999 && lowHigh.second == -999) {
                 std::cout << "\nNo stations found within that distance\n";
                 return;
             }
-            std::cout 
+            std::cout
                     << "\nThe lowest gas price in this area is: $" << std::fixed << std::setprecision(2)
-                    << highLow.first << "\n";
-            std::cout 
+                    << lowHigh.first << "\n";
+            std::cout
                     << "\nThe highest gas price in this area is: $" << std::fixed << std::setprecision(2)
-                    << highLow.second << "\n";
+                    << lowHigh.second << "\n";
         }
     }
     catch (std::exception &err){
