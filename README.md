@@ -27,10 +27,10 @@ You can enter the initial coordinate as well as the desired size of the dataset 
 ## Compilation Instructions
 To compile the main program, you must have access to ``main.cpp``, ``seg_tree.cpp``, ``node.cpp`` and the corresponding header files. To compile and run, you must provide an iteration of the following command:
 ```
-g++ main.cpp seg_tree.cpp node.cpp -o <file_name> && ./<file_name> <data.txt>
+g++ main.cpp seg_tree.cpp node.cpp -o <file_name> && ./<file_name> <dataset_name.txt>
 ```
 
-The program only accepts one command line argument ``data.txt``, which is the name of the dataset. We will be using ``test.txt`` throughout the upcoming explanations.
+The program only accepts one command line argument ``data_name.txt``, which is the name of the dataset. We will be using ``test.txt``, supplied in the datasets folder, throughout the upcoming explanations.
 
 ## Runtime Instructions
 Once the program is running, the user will be prompted with a terminal UI, allowing you to choose from several options. 
