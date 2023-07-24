@@ -272,7 +272,7 @@ void seg_tree::insert(int pos, double value){
     //if position index is not valid
     //then input is invalid
     if (pos < 0 || pos > inputVec.size()-1){
-        std::cout << "invalid input\n";
+        std::cout << "\nInvalid input\n";
         return;
     }
 

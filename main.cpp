@@ -202,7 +202,7 @@ void choice1(seg_tree *st){
         st->insert(std::stoi(stationChoice), std::stod(newPrice));
     }
     catch(std::exception &err) {
-        std::cout << "<nIvalid input\n";
+        std::cout << "\nInvalid input\n";
     }
 }
 
@@ -212,7 +212,7 @@ void choice1(seg_tree *st){
 void choice2(seg_tree *st){
     //gets input from user
     std::string high;
-    std::cout << "\nInput the maximum distance:";
+    std::cout << "\nInput the maximum distance from the starting point (in miles):";
     std::cin >> high;
 
     //tries to call average function
@@ -222,16 +222,16 @@ void choice2(seg_tree *st){
         //if the input is negative
         //then input is invalid
         if (std::stod(high) < 0.0){
-            std::cout << "Invalid input\n";
+            std::cout << "\nInvalid input\n";
         }
-        else {
+        else if (st->getAvg(std::stod(high)) != -999) {
             std::cout 
                     << "\nThe average gas price in this area is: $" << std::fixed << std::setprecision(2)
-                    << st->getAvg(0, std::stod(high)) << "\n";
+
         }
     }
     catch(std::exception &err){
-        std::cout << "Invalid input\n";
+        std::cout << "\nInvalid input\n";
     }
 }
 
@@ -243,9 +243,9 @@ void choice3(seg_tree *st){
     std::string low;
     std::string high;
 
-    std::cout << "\nInput the minimum distance:";
+    std::cout << "\nInput the minimum distance from the starting point (in miles):";
     std::cin >> low;
-    std::cout << "Input the maximum distance:";
+    std::cout << "Input the maximum distance from the starting point (in miles):";
     std::cin >> high;
 
     //tries to call average function
@@ -255,15 +255,17 @@ void choice3(seg_tree *st){
         //if either input is negative
         //then input(s) is invalid
         if (std::stod(high) < 0.0 || std::stod(low) < 0.0) {
-            std::cout << "Invalid input test\n";
+            std::cout << "\nInvalid input\n";
         }
-        else {
+        else if (st->getAvg(std::stod(low), std::stod(high)) != -999) {
             std::cout << "\nThe average gas price in this area is: $" << std::fixed << std::setprecision(2)
                       << st->getAvg(std::stod(low), std::stod(high)) << "\n";
+        } else {
+            std::cout << "\nNo stations found between distances\n";
         }
     }
     catch (std::exception &err){
-        std::cout << "Invalid input\n";
+        std::cout << "\nInvalid input\n";
     }
 }
 
@@ -273,7 +275,7 @@ void choice4(seg_tree *st){
     //gets input
     std::string high;
 
-    std::cout << "\nInput the maximum distance:";
+    std::cout << "\nInput the maximum distance from the starting point (in miles):";
     std::cin >> high;
 
     //tries to do getHighLow function with
@@ -283,20 +285,24 @@ void choice4(seg_tree *st){
         //if input is negative
         //then input is invalid
         if (std::stod(high) < 0.0){
-            std::cout << "Invalid input\n";
+            std::cout << "\nInvalid input\n";
         }
         else {
             std::pair<double,double> highLow = st->getHighLow(std::stod(high));
+            if (highLow.first == -999 && highLow.second == -999) {
+                std::cout << "\nNo stations found within that distance\n";
+                return;
+            }
             std::cout 
-                    << "\nthe lowest gas price in this area is: $" << std::fixed << std::setprecision(2)
+                    << "\nThe lowest gas price in this area is: $" << std::fixed << std::setprecision(2)
                     << highLow.first << "\n";
             std::cout 
-                    << "\nthe highest gas price in this area is: $" << std::fixed << std::setprecision(2)
+                    << "\nThe highest gas price in this area is: $" << std::fixed << std::setprecision(2)
                     << highLow.second << "\n";
         }
     }
     catch(std::exception &err){
-        std::cout << "Invalid input\n";
+        std::cout << "\nInvalid input\n";
     }
 }
 
@@ -305,9 +311,9 @@ void choice5(seg_tree *st){
     std::string low;
     std::string high;
 
-    std::cout << "\nInput the minimum distance:";
+    std::cout << "\nInput the minimum distance from the starting point (in miles):";
     std::cin >> low;
-    std::cout << "Input the maximum distance:";
+    std::cout << "Input the maximum distance from the starting point (in miles):";
     std::cin >> high;
 
     //tries to call getHighLow function
@@ -317,10 +323,14 @@ void choice5(seg_tree *st){
         //if either input is negative
         //then input(s) is invalid
         if (std::stod(high) < 0.0 || std::stod(low) < 0.0) {
-            std::cout << "Invalid input test\n";
+            std::cout << "\nInvalid input\n";
         }
         else {
             std::pair<double,double> highLow = st->getHighLow(std::stod(low), std::stod(high));
+            if (highLow.first == -999 && highLow.second == -999) {
+                std::cout << "\nNo stations found within that distance\n";
+                return;
+            }
             std::cout 
                     << "\nThe lowest gas price in this area is: $" << std::fixed << std::setprecision(2)
                     << highLow.first << "\n";
@@ -330,7 +340,7 @@ void choice5(seg_tree *st){
         }
     }
     catch (std::exception &err){
-        std::cout << "Invalid input\n";
+        std::cout << "\nInvalid input\n";
     }
 }
 
