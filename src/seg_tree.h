@@ -21,7 +21,7 @@ private:
     int binarySearch(bool mode, int low, int high, double target);
 
     double getAvg(int currentNodeLow, int currentNodeHigh, int searchLow, int searchHigh, Node* currentNode);
-    std::pair<double, double> getHighLow(int currentNodeLow, int currentNodeHigh, int searchLow, int searchHigh, Node* currentNode, std::pair<double, double> highLow);
+    std::pair<double, double> getLowHigh(int currentNodeLow, int currentNodeHigh, int searchLow, int searchHigh, Node* currentNode, std::pair<double, double> lowHigh);
 
     void insert(int pos, int low, int high, double add, Node* currentNode);
 
@@ -36,10 +36,10 @@ public:
     void printVector();
 
     double getAvg(double low, double high);
-    // double getAvg(double high);
+    double getAvg(double high);
 
-    std::pair<double, double> getHighLow(double low, double high);
-    std::pair<double, double> getHighLow(double high);
+    std::pair<double, double> getLowHigh(double low, double high);
+    std::pair<double, double> getLowHigh(double high);
 
     void insert(int pos, double value);
 
