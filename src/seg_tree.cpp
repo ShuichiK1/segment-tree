@@ -138,8 +138,6 @@ int seg_tree::binarySearch(bool mode, int low, int high, double target)
         else{return m;}
     }
     else{
-        //TODO POTENTIALLY A PROBLEM HERE
-        //NEEDS MORE TESTING TO BE SURE
         if (inputVec[m][1] <= target){return m;}
         else{return m-1;}
     }
@@ -160,20 +158,20 @@ double seg_tree::getAvg(double low, double high){
     return getAvg(0,inputVec.size()-1 ,lowIndex, highIndex, root) / (highIndex - lowIndex + 1);
 }
 
-// //function that calls overloaded getAvg function
-// //while getting the high indexes
-// //and handling a possible error
-// //low index is 0 since start is starting point in this case
-// double seg_tree::getAvg(double high){
-//     //gets high index
-//     int highIndex = binarySearch(0, 0, inputVec.size()-1, high);
+//function that calls overloaded getAvg function
+//while getting the high indexes
+//and handling a possible error
+//low index is 0 since start is starting point in this case
+ double seg_tree::getAvg(double high){
+    //gets high index
+    int highIndex = binarySearch(0, 0, inputVec.size()-1, high);
 
-//     //if index is invalid the input is invalid
-//     if (highIndex == -1){return -999;}
+    //if index is invalid the input is invalid
+    if (highIndex == -1){return -999;}
 
-//     //calls overloaded function
-//     return getAvg(0,inputVec.size()-1 ,0, highIndex, root) / (highIndex+1);
-// }
+    //calls overloaded function
+    return getAvg(0,inputVec.size()-1 ,0, highIndex, root) / (highIndex+1);
+}
 
 //function that gets the average gas price
 //between the inputted low/high indexes
@@ -203,7 +201,7 @@ double seg_tree::getAvg(int currentNodeLow, int currentNodeHigh, int searchLow, 
 //function that calls overloaded getHighLow function
 //while getting the low/high indexes
 //and handling a possible error
-std::pair<double, double> seg_tree::getHighLow(double low, double high){
+std::pair<double, double> seg_tree::getLowHigh(double low, double high){
     //gets high/low indexes
     int lowIndex = binarySearch(true, 0, inputVec.size()-1, low);
     int highIndex = binarySearch(false, 0, inputVec.size()-1, high);
@@ -213,14 +211,15 @@ std::pair<double, double> seg_tree::getHighLow(double low, double high){
     if (highIndex == -1){return {-999, -999};}
 
     //calls overloaded function
-    return getHighLow(0,inputVec.size()-1 ,lowIndex, highIndex, root, {999, -999});
+    return getLowHigh(0,inputVec.size()-1 ,lowIndex, highIndex, root,
+                      {root->highPrice, root->lowPrice});
 }
 
 //function that calls overloaded getHighLow function
 //while getting the high indexes
 //and handling a possible error
 //low index is 0 since start is starting point in this case
-std::pair<double, double> seg_tree::getHighLow(double high){
+std::pair<double, double> seg_tree::getLowHigh(double high){
     //gets high index
     int highIndex = binarySearch(false, 0, inputVec.size()-1, high);
 
@@ -229,29 +228,31 @@ std::pair<double, double> seg_tree::getHighLow(double high){
     if (highIndex == -1){return {-999, -999};}
 
     //calls overloaded function
-    return getHighLow(0,inputVec.size()-1 ,0, highIndex, root, {999, -999});
+    return getLowHigh(0,inputVec.size()-1 ,0, highIndex, root,
+                      {root->highPrice, root->lowPrice});
 }
 
 //function that gets the lowest/highest gas price
 //between the inputted low/high indexes
 //traverses the segment tree for this query
-std::pair<double, double> seg_tree::getHighLow(int currentNodeLow, int currentNodeHigh, int searchLow, int searchHigh, Node *currentNode, std::pair<double, double> highLow) {
+std::pair<double, double> seg_tree::getLowHigh(int currentNodeLow, int currentNodeHigh, int searchLow, int searchHigh,
+                                               Node *currentNode, std::pair<double, double> lowHigh) {
     //if the current high/low is out of range or
     //current node is null then return
     if (searchHigh < currentNodeLow || currentNodeHigh < searchLow || !currentNode) {
-        return highLow;
+        return lowHigh;
     }
 
     //updates the current low/high price
     //if it needs to be
     if (searchLow <= currentNodeLow && currentNodeHigh <= searchHigh){
-        if (currentNode->lowPrice < highLow.first){
-            highLow.first = currentNode->lowPrice;
+        if (currentNode->lowPrice < lowHigh.first){
+            lowHigh.first = currentNode->lowPrice;
         }
-        if (currentNode->highPrice > highLow.second){
-            highLow.second = currentNode->highPrice;
+        if (currentNode->highPrice > lowHigh.second){
+            lowHigh.second = currentNode->highPrice;
         }
-        return highLow;
+        return lowHigh;
     }
 
     //gets mid point
@@ -259,10 +260,10 @@ std::pair<double, double> seg_tree::getHighLow(int currentNodeLow, int currentNo
 
     //recursively traverses the tree
     //and gets the high/low prices
-    highLow = getHighLow(currentNodeLow, mid-1, searchLow, searchHigh, currentNode->left, highLow);
-    highLow = getHighLow(mid, currentNodeHigh, searchLow, searchHigh, currentNode->right, highLow);
+    lowHigh = getLowHigh(currentNodeLow, mid-1, searchLow, searchHigh, currentNode->left, lowHigh);
+    lowHigh = getLowHigh(mid, currentNodeHigh, searchLow, searchHigh, currentNode->right, lowHigh);
 
-    return highLow;
+    return lowHigh;
 }
 
 //function for calling the overloaded insertion function
@@ -357,12 +358,12 @@ void seg_tree::writeFile(std::string ifname){
     if (root == nullptr){
         outfile<< "\n";
     }
-    //if root has no children then just
-    //write the root
+        //if root has no children then just
+        //write the root
     else if (root->right == nullptr && root->left == nullptr){
         outfile<< "\t" << rootString << ";\n" ;
     }
-    //else write the entire tree
+        //else write the entire tree
     else{
         writeNode(0, inputVec.size()-1, root, outfile);
     }
