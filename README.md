@@ -137,5 +137,6 @@ DOT file has been written
 ```
 
 For ``test.txt``, the DOT file, when visualized, will look like the following:
+
 ![graph](https://github.com/ShuichiK1/segment-tree/assets/78115987/a92d3182-9e3c-4f2e-8a12-79ef209af4ca)
 
