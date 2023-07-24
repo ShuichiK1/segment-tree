@@ -27,7 +27,7 @@ int main() {
 
     std::cin >> initial_lat >> initial_lon >> max_num;
 
-    std::string outputName = "data" + std::to_string(max_num) + ".txt";
+    std::string outputName = "dataset_" + std::to_string(max_num) + ".txt";
     std::ofstream file;
     file.open(outputName);
 
