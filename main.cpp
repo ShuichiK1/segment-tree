@@ -227,9 +227,7 @@ void choice2(seg_tree *st){
         else if (st->getAvg(std::stod(high)) != -999) {
             std::cout 
                     << "\nThe average gas price in this area is: $" << std::fixed << std::setprecision(2)
-                    << st->getAvg(std::stod(high)) << "\n";
-        } else {
-            std::cout << "\nMaximum distance too small\n";
+
         }
     }
     catch(std::exception &err){

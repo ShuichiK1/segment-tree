@@ -160,20 +160,20 @@ double seg_tree::getAvg(double low, double high){
     return getAvg(0,inputVec.size()-1 ,lowIndex, highIndex, root) / (highIndex - lowIndex + 1);
 }
 
-//function that calls overloaded getAvg function
-//while getting the high indexes
-//and handling a possible error
-//low index is 0 since start is starting point in this case
-double seg_tree::getAvg(double high){
-    //gets high index
-    int highIndex = binarySearch(0, 0, inputVec.size()-1, high);
+// //function that calls overloaded getAvg function
+// //while getting the high indexes
+// //and handling a possible error
+// //low index is 0 since start is starting point in this case
+// double seg_tree::getAvg(double high){
+//     //gets high index
+//     int highIndex = binarySearch(0, 0, inputVec.size()-1, high);
 
-    //if index is invalid the input is invalid
-    if (highIndex == -1){return -999;}
+//     //if index is invalid the input is invalid
+//     if (highIndex == -1){return -999;}
 
-    //calls overloaded function
-    return getAvg(0,inputVec.size()-1 ,0, highIndex, root) / (highIndex+1);
-}
+//     //calls overloaded function
+//     return getAvg(0,inputVec.size()-1 ,0, highIndex, root) / (highIndex+1);
+// }
 
 //function that gets the average gas price
 //between the inputted low/high indexes
