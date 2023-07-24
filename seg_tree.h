@@ -36,7 +36,7 @@ public:
     void printVector();
 
     double getAvg(double low, double high);
-    double getAvg(double high);
+    // double getAvg(double high);
 
     std::pair<double, double> getHighLow(double low, double high);
     std::pair<double, double> getHighLow(double high);
